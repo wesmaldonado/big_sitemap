@@ -176,9 +176,8 @@ class BigSitemap
                 if options[:location].is_a?(Proc)
                   options[:location].call(record)
                 else
-                  File.join @options[:base_url], options[:path], record.send(param_method).to_s
+                  @options[:url_generator].send( (model.table_name.singularize + '_url').to_sym, record, :host  => @options[:url_domain])
                 end
-
               change_frequency = options[:change_frequency] || 'weekly'
               freq = change_frequency.is_a?(Proc) ? change_frequency.call(record) : change_frequency
 
